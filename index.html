@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>christmas gift ily!</title>
+    <title>christmas gift ily</title>
     <style>
         body {
             margin: 0;
@@ -108,6 +108,24 @@
             border-radius: 2px;
         }
 
+        /* Snow effect */
+        .snowflake {
+            position: absolute;
+            top: -10px;
+            color: white;
+            font-size: 14px;
+            opacity: 0.8;
+            animation: fall linear infinite;
+            z-index: 1; /* Above video, below overlays */
+        }
+
+        @keyframes fall {
+            to {
+                transform: translateY(100vh);
+                opacity: 0;
+            }
+        }
+
         /* Mobile responsiveness: Portrait layout */
         @media (max-width: 768px) and (orientation: portrait) {
             body {
@@ -154,7 +172,7 @@
     <div class="dark-overlay"></div>
 
     <!-- Background music -->
-    <audio id="bg-music" loop>
+    <audio id="bg-music" loop volume="0.3">
         <source src="background-music.mp3" type="audio/mpeg"> <!-- fixed -->
         Your browser does not support the audio element.
     </audio>
@@ -185,8 +203,8 @@
             if (index < text.length) {
                 const char = text.charAt(index);
                 
-                // Randomly introduce a typo (about 5% chance, not on spaces or punctuation)
-                if (!isCorrecting && Math.random() < 0.05 && char.match(/[a-zA-Z]/)) {
+                // Randomly introduce a typo (about 2% chance, not on spaces or punctuation)
+                if (!isCorrecting && Math.random() < 0.02 && char.match(/[a-zA-Z]/)) {
                     isCorrecting = true;
                     const wrongChar = getRandomTypo(char);
                     typewriterElement.innerHTML += `<span class="selection">${wrongChar}</span>`;
@@ -219,6 +237,30 @@
             };
             return typos[char.toLowerCase()] || char;
         }
+
+        // Function to create snowflakes
+        function createSnowflakes() {
+            const snowContainer = document.body;
+            const numSnowflakes = 8; // Fewer snowflakes for a subtle effect
+
+            for (let i = 0; i < numSnowflakes; i++) {
+                const snowflake = document.createElement('div');
+                snowflake.className = 'snowflake';
+                snowflake.textContent = '❄'; // Snowflake symbol
+                snowflake.style.left = Math.random() * 100 + '%';
+                snowflake.style.animationDuration = (Math.random() * 5 + 5) + 's'; // Random duration between 5-10s
+                snowflake.style.fontSize = (Math.random() * 6 + 6) + 'px'; // Random size between 6-12px for smaller, varied sizes
+                snowContainer.appendChild(snowflake);
+
+                // Remove snowflake after animation to avoid buildup
+                setTimeout(() => {
+                    snowflake.remove();
+                }, 10000);
+            }
+        }
+
+        // Start snow effect
+        setInterval(createSnowflakes, 1000); // Create new snowflakes every 1 second for less frequency
 
         // Intro overlay click event
         introOverlay.addEventListener('click', function() {
