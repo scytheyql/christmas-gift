@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>christmas gift ily!</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: black;
+            font-family: 'Courier New', monospace; /* Typewriter-like font */
+            color: white;
+            overflow: hidden;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            position: relative;
+        }
+
+        /* Full-screen video background */
+        .video-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover; /* Covers the entire screen without distortion */
+            z-index: 0; /* Behind everything */
+        }
+
+        /* Blurry intro overlay covering the entire screen */
+        .intro-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.8); /* Semi-transparent black */
+            backdrop-filter: blur(20px); /* Heavy blur effect */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 10; /* On top of everything */
+            cursor: pointer;
+        }
+
+        .intro-text {
+            font-size: 36px;
+            color: white;
+            text-shadow: 0 0 15px rgba(255, 255, 255, 0.8); /* Glowing text */
+            text-align: center;
+        }
+
+        /* Transparent black overlay behind the text box to darken the video */
+        .dark-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.3); /* Semi-transparent black for darkening */
+            z-index: 1; /* Behind text box but above video */
+        }
+
+        /* Transparent box with blur effect */
+        .text-box {
+            position: relative;
+            background-color: rgba(255, 255, 255, 0.1); /* Semi-transparent white */
+            backdrop-filter: blur(10px); /* Blurs background */
+            border-radius: 20px; /* Rounded corners */
+            padding: 20px;
+            max-width: 600px;
+            text-align: center;
+            z-index: 2;
+            box-shadow: 0 0 20px rgba(255, 255, 255, 0.2);
+            display: none; /* Hidden initially, shown after intro click */
+        }
+
+        /* Text styling for readability with more glow */
+        .typewriter {
+            font-size: 24px; /* Large for readability */
+            line-height: 1.5;
+            color: white; /* High contrast on black bg */
+            text-shadow: 0 0 15px rgba(255, 255, 255, 0.8), 0 0 30px rgba(0, 0, 255, 0.5); /* Stronger glow with blue tint */
+            position: relative;
+        }
+
+        /* Blinking cursor line */
+        .typewriter::after {
+            content: '|';
+            animation: blink 1s infinite;
+            color: white;
+            text-shadow: 0 0 15px rgba(255, 255, 255, 0.8);
+        }
+
+        @keyframes blink {
+            0%, 50% { opacity: 1; }
+            51%, 100% { opacity: 0; }
+        }
+
+        /* Fake text selection highlight */
+        .selection {
+            background-color: white;
+            color: black;
+            padding: 0 2px;
+            border-radius: 2px;
+        }
+
+        /* Mobile responsiveness: Portrait layout */
+        @media (max-width: 768px) and (orientation: portrait) {
+            body {
+                flex-direction: column; /* Stack elements vertically */
+                justify-content: flex-start; /* Text box at top on mobile */
+                padding-top: 20px;
+                overflow: auto; /* Allow scrolling on mobile to prevent text cutoff */
+                height: auto; /* Allow body to expand beyond 100vh if needed */
+                min-height: 100vh; /* Ensure it at least fills the screen */
+            }
+            .text-box {
+                max-width: 90%; /* Wider on small screens */
+                margin-bottom: 20px;
+                max-height: none; /* Allow it to expand fully */
+            }
+            .typewriter {
+                font-size: 18px; /* Smaller for mobile to fit more text */
+                line-height: 1.4; /* Adjust line height for better readability */
+            }
+            .intro-text {
+                font-size: 28px; /* Smaller on mobile */
+            }
+        }
+
+        /* Additional mobile adjustments for very small screens */
+        @media (max-width: 480px) {
+            .typewriter {
+                font-size: 16px; /* Even smaller on very small screens */
+            }
+            .text-box {
+                padding: 15px; /* Reduce padding for more space */
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Full-screen video background (now looping) -->
+    <video class="video-bg" autoplay muted playsinline loop>
+        <source src="blue-lily-video.mp4" type="video/mp4"> <!-- fixed -->
+        Your browser does not support the video tag.
+    </video>
+
+    <!-- Transparent black overlay to darken the video behind the text box -->
+    <div class="dark-overlay"></div>
+
+    <!-- Background music -->
+    <audio id="bg-music" loop>
+        <source src="background-music.mp3" type="audio/mpeg"> <!-- fixed -->
+        Your browser does not support the audio element.
+    </audio>
+
+    <!-- Blurry intro overlay -->
+    <div class="intro-overlay" id="intro-overlay">
+        <div class="intro-text">Click to Open</div>
+    </div>
+
+    <!-- Transparent box -->
+    <div class="text-box" id="text-box">
+        <div id="typewriter-text" class="typewriter"></div>
+    </div>
+
+    <script>
+        // Updated text with typos and human style preserved
+        const text = `Merry Christmas, my love! I hope you enjoy this season. I couldn't find purchaseable flowers since they were all very expensive. I hope this can be enough for you, I did put some effort in.. especially finding the video, I hope you can get all the money and food you could desire for this season. Just know i'll love you with all of my heart for however long I can handle, and I hope you do too. I know it isnt much, but its still something from me to you. I wish I could give you more, and do more, and be there in every way possible. Even if its small, I hope you feel how real it is. I hope you stay warm, safe, and cared for this christmas. No matter what happens, or how hard things get, just know theres someone here thinking about you and loving you quietly. Always.`;
+
+        const typewriterElement = document.getElementById('typewriter-text');
+        const introOverlay = document.getElementById('intro-overlay');
+        const textBox = document.getElementById('text-box');
+        const bgMusic = document.getElementById('bg-music');
+        let index = 0;
+        let isCorrecting = false; // Flag to prevent overlapping corrections
+
+        // Function to simulate typing with typos and corrections
+        function typeWriter() {
+            if (index < text.length) {
+                const char = text.charAt(index);
+                
+                // Randomly introduce a typo (about 5% chance, not on spaces or punctuation)
+                if (!isCorrecting && Math.random() < 0.05 && char.match(/[a-zA-Z]/)) {
+                    isCorrecting = true;
+                    const wrongChar = getRandomTypo(char);
+                    typewriterElement.innerHTML += `<span class="selection">${wrongChar}</span>`;
+
+                    setTimeout(() => {
+                        typewriterElement.innerHTML = typewriterElement.innerHTML.replace(
+                            `<span class="selection">${wrongChar}</span>`,
+                            ''
+                        );
+                        setTimeout(() => {
+                            typewriterElement.innerHTML += char;
+                            index++;
+                            isCorrecting = false;
+                            setTimeout(typeWriter, 50);
+                        }, 200);
+                    }, 300);
+                } else {
+                    typewriterElement.innerHTML += char;
+                    index++;
+                    setTimeout(typeWriter, 50);
+                }
+            }
+        }
+
+        // Helper function to generate a random typo
+        function getRandomTypo(char) {
+            const typos = {
+                'a': 's', 's': 'a', 'e': 'r', 'r': 'e', 't': 'y', 'y': 't',
+                'i': 'o', 'o': 'i', 'n': 'm', 'm': 'n', 'h': 'j', 'j': 'h'
+            };
+            return typos[char.toLowerCase()] || char;
+        }
+
+        // Intro overlay click event
+        introOverlay.addEventListener('click', function() {
+            introOverlay.style.display = 'none';
+            textBox.style.display = 'block';
+            bgMusic.play();
+            typeWriter();
+        });
+    </script>
+</body>
+</html>
