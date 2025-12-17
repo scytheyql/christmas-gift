@@ -9,7 +9,7 @@
             margin: 0;
             padding: 0;
             background-color: black;
-            font-family: 'Courier New', monospace; /* Typewriter-like font */
+            font-family: 'Courier New', monospace;
             color: white;
             overflow: hidden;
             display: flex;
@@ -19,75 +19,75 @@
             position: relative;
         }
 
-        /* Full-screen video background */
+        
         .video-bg {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            object-fit: cover; /* Covers the entire screen without distortion */
-            z-index: 0; /* Behind everything */
+            object-fit: cover;
+            z-index: 0;
         }
 
-        /* Blurry intro overlay covering the entire screen */
+        
         .intro-overlay {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background-color: rgba(0, 0, 0, 0.8); /* Semi-transparent black */
-            backdrop-filter: blur(20px); /* Heavy blur effect */
+            background-color: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(20px);
             display: flex;
             justify-content: center;
             align-items: center;
-            z-index: 10; /* On top of everything */
+            z-index: 10;
             cursor: pointer;
         }
 
         .intro-text {
             font-size: 36px;
             color: white;
-            text-shadow: 0 0 15px rgba(255, 255, 255, 0.8); /* Glowing text */
+            text-shadow: 0 0 15px rgba(255, 255, 255, 0.8);
             text-align: center;
         }
 
-        /* Transparent black overlay behind the text box to darken the video */
+        
         .dark-overlay {
             position: absolute;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background-color: rgba(0, 0, 0, 0.3); /* Semi-transparent black for darkening */
-            z-index: 1; /* Behind text box but above video */
+            background-color: rgba(0, 0, 0, 0.3);
+            z-index: 1;
         }
 
-        /* Transparent box with blur effect */
+        
         .text-box {
             position: relative;
-            background-color: rgba(255, 255, 255, 0.1); /* Semi-transparent white */
-            backdrop-filter: blur(10px); /* Blurs background */
-            border-radius: 20px; /* Rounded corners */
+            background-color: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
             padding: 20px;
             max-width: 600px;
             text-align: center;
             z-index: 2;
             box-shadow: 0 0 20px rgba(255, 255, 255, 0.2);
-            display: none; /* Hidden initially, shown after intro click */
+            display: none;
         }
 
-        /* Text styling for readability with more glow */
+        
         .typewriter {
-            font-size: 24px; /* Large for readability */
+            font-size: 24px;
             line-height: 1.5;
-            color: white; /* High contrast on black bg */
-            text-shadow: 0 0 15px rgba(255, 255, 255, 0.8), 0 0 30px rgba(0, 0, 255, 0.5); /* Stronger glow with blue tint */
+            color: white;
+            text-shadow: 0 0 15px rgba(255, 255, 255, 0.8), 0 0 30px rgba(0, 0, 255, 0.5);
             position: relative;
         }
 
-        /* Blinking cursor line */
+        
         .typewriter::after {
             content: '|';
             animation: blink 1s infinite;
@@ -100,7 +100,7 @@
             51%, 100% { opacity: 0; }
         }
 
-        /* Fake text selection highlight */
+        
         .selection {
             background-color: white;
             color: black;
@@ -108,7 +108,7 @@
             border-radius: 2px;
         }
 
-        /* Snow effect */
+        
         .snowflake {
             position: absolute;
             top: -10px;
@@ -116,7 +116,7 @@
             font-size: 14px;
             opacity: 0.8;
             animation: fall linear infinite;
-            z-index: 1; /* Above video, below overlays */
+            z-index: 3;
         }
 
         @keyframes fall {
@@ -260,7 +260,19 @@
         }
 
         // Start snow effect
-        setInterval(createSnowflakes, 1000); // Create new snowflakes every 1 second for less frequency
+        setInterval(createSnowflakes, 3000); // Create new snowflakes every 3 seconds for even less frequency
+
+        // Pause music when tab is not active
+        document.addEventListener('visibilitychange', function() {
+            if (document.hidden) {
+                bgMusic.pause();
+            }
+        });
+
+        // Stop music when closing the page
+        window.addEventListener('beforeunload', function() {
+            bgMusic.pause();
+        });
 
         // Intro overlay click event
         introOverlay.addEventListener('click', function() {
