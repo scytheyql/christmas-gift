@@ -19,7 +19,6 @@
             position: relative;
         }
 
-        
         .video-bg {
             position: fixed;
             top: 0;
@@ -30,7 +29,6 @@
             z-index: 0;
         }
 
-        
         .intro-overlay {
             position: fixed;
             top: 0;
@@ -53,7 +51,6 @@
             text-align: center;
         }
 
-        
         .dark-overlay {
             position: absolute;
             top: 0;
@@ -64,7 +61,6 @@
             z-index: 1;
         }
 
-        
         .text-box {
             position: relative;
             background-color: rgba(255, 255, 255, 0.1);
@@ -78,7 +74,6 @@
             display: none;
         }
 
-        
         .typewriter {
             font-size: 24px;
             line-height: 1.5;
@@ -87,7 +82,6 @@
             position: relative;
         }
 
-        
         .typewriter::after {
             content: '|';
             animation: blink 1s infinite;
@@ -100,7 +94,6 @@
             51%, 100% { opacity: 0; }
         }
 
-        
         .selection {
             background-color: white;
             color: black;
@@ -108,7 +101,6 @@
             border-radius: 2px;
         }
 
-        
         .snowflake {
             position: absolute;
             top: -10px;
@@ -126,69 +118,61 @@
             }
         }
 
-        /* Mobile responsiveness: Portrait layout */
         @media (max-width: 768px) and (orientation: portrait) {
             body {
-                flex-direction: column; /* Stack elements vertically */
-                justify-content: flex-start; /* Text box at top on mobile */
+                flex-direction: column;
+                justify-content: flex-start;
                 padding-top: 20px;
-                overflow: auto; /* Allow scrolling on mobile to prevent text cutoff */
-                height: auto; /* Allow body to expand beyond 100vh if needed */
-                min-height: 100vh; /* Ensure it at least fills the screen */
+                overflow: auto;
+                height: auto;
+                min-height: 100vh;
             }
             .text-box {
-                max-width: 90%; /* Wider on small screens */
+                max-width: 90%;
                 margin-bottom: 20px;
-                max-height: none; /* Allow it to expand fully */
+                max-height: none;
             }
             .typewriter {
-                font-size: 18px; /* Smaller for mobile to fit more text */
-                line-height: 1.4; /* Adjust line height for better readability */
+                font-size: 18px;
+                line-height: 1.4;
             }
             .intro-text {
-                font-size: 28px; /* Smaller on mobile */
+                font-size: 28px;
             }
         }
 
-        /* Additional mobile adjustments for very small screens */
         @media (max-width: 480px) {
             .typewriter {
-                font-size: 16px; /* Even smaller on very small screens */
+                font-size: 16px;
             }
             .text-box {
-                padding: 15px; /* Reduce padding for more space */
+                padding: 15px;
             }
         }
     </style>
 </head>
 <body>
-    <!-- Full-screen video background (now looping) -->
     <video class="video-bg" autoplay muted playsinline loop>
-        <source src="blue-lily-video.mp4" type="video/mp4"> <!-- fixed -->
+        <source src="blue-lily-video.mp4" type="video/mp4">
         Your browser does not support the video tag.
     </video>
 
-    <!-- Transparent black overlay to darken the video behind the text box -->
     <div class="dark-overlay"></div>
 
-    <!-- Background music -->
     <audio id="bg-music" loop volume="0.3">
-        <source src="background-music.mp3" type="audio/mpeg"> <!-- fixed -->
+        <source src="background-music.mp3" type="audio/mpeg">
         Your browser does not support the audio element.
     </audio>
 
-    <!-- Blurry intro overlay -->
     <div class="intro-overlay" id="intro-overlay">
         <div class="intro-text">Click to Open</div>
     </div>
 
-    <!-- Transparent box -->
     <div class="text-box" id="text-box">
         <div id="typewriter-text" class="typewriter"></div>
     </div>
 
     <script>
-        // Updated text with typos and human style preserved
         const text = `Merry Christmas, my love! I hope you enjoy this season. I couldn't find purchaseable flowers since they were all very expensive. I hope this can be enough for you, I did put some effort in.. especially finding the video, I hope you can get all the money and food you could desire for this season. Just know i'll love you with all of my heart for however long I can handle, and I hope you do too. I know it isnt much, but its still something from me to you. I wish I could give you more, and do more, and be there in every way possible. Even if its small, I hope you feel how real it is. I hope you stay warm, safe, and cared for this christmas. No matter what happens, or how hard things get, just know theres someone here thinking about you and loving you quietly. Always.`;
 
         const typewriterElement = document.getElementById('typewriter-text');
@@ -196,14 +180,12 @@
         const textBox = document.getElementById('text-box');
         const bgMusic = document.getElementById('bg-music');
         let index = 0;
-        let isCorrecting = false; // Flag to prevent overlapping corrections
+        let isCorrecting = false;
 
-        // Function to simulate typing with typos and corrections
         function typeWriter() {
             if (index < text.length) {
                 const char = text.charAt(index);
                 
-                // Randomly introduce a typo (about 2% chance, not on spaces or punctuation)
                 if (!isCorrecting && Math.random() < 0.02 && char.match(/[a-zA-Z]/)) {
                     isCorrecting = true;
                     const wrongChar = getRandomTypo(char);
@@ -229,7 +211,6 @@
             }
         }
 
-        // Helper function to generate a random typo
         function getRandomTypo(char) {
             const typos = {
                 'a': 's', 's': 'a', 'e': 'r', 'r': 'e', 't': 'y', 'y': 't',
@@ -238,43 +219,37 @@
             return typos[char.toLowerCase()] || char;
         }
 
-        // Function to create snowflakes
         function createSnowflakes() {
             const snowContainer = document.body;
-            const numSnowflakes = 8; // Fewer snowflakes for a subtle effect
+            const numSnowflakes = 8;
 
             for (let i = 0; i < numSnowflakes; i++) {
                 const snowflake = document.createElement('div');
                 snowflake.className = 'snowflake';
-                snowflake.textContent = '❄'; // Snowflake symbol
+                snowflake.textContent = '❄';
                 snowflake.style.left = Math.random() * 100 + '%';
-                snowflake.style.animationDuration = (Math.random() * 5 + 5) + 's'; // Random duration between 5-10s
-                snowflake.style.fontSize = (Math.random() * 6 + 6) + 'px'; // Random size between 6-12px for smaller, varied sizes
+                snowflake.style.animationDuration = (Math.random() * 5 + 5) + 's';
+                snowflake.style.fontSize = (Math.random() * 6 + 6) + 'px';
                 snowContainer.appendChild(snowflake);
 
-                // Remove snowflake after animation to avoid buildup
                 setTimeout(() => {
                     snowflake.remove();
                 }, 10000);
             }
         }
 
-        // Start snow effect
-        setInterval(createSnowflakes, 3000); // Create new snowflakes every 3 seconds for even less frequency
+        setInterval(createSnowflakes, 3000);
 
-        // Pause music when tab is not active
         document.addEventListener('visibilitychange', function() {
             if (document.hidden) {
                 bgMusic.pause();
             }
         });
 
-        // Stop music when closing the page
         window.addEventListener('beforeunload', function() {
             bgMusic.pause();
         });
 
-        // Intro overlay click event
         introOverlay.addEventListener('click', function() {
             introOverlay.style.display = 'none';
             textBox.style.display = 'block';
