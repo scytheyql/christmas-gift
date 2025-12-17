@@ -159,7 +159,7 @@
 
     <div class="dark-overlay"></div>
 
-    <audio id="bg-music" loop volume="0.3">
+    <audio id="bg-music" loop>
         <source src="background-music.mp3" type="audio/mpeg">
         Your browser does not support the audio element.
     </audio>
@@ -181,6 +181,8 @@
         const bgMusic = document.getElementById('bg-music');
         let index = 0;
         let isCorrecting = false;
+
+        bgMusic.volume = 0.2;
 
         function typeWriter() {
             if (index < text.length) {
